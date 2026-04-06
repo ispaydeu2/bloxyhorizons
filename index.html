@@ -23,18 +23,27 @@
 </head>
 <body>
     <video id="intro" autoplay muted playsinline>
-        <source src="BloxyHorizons_Redirect_Video.mp4" type="video/mp4">
+        <source id="videoSrc" src="" type="video/mp4">
     </video>
     <script>
-        const video = document.getElementById('intro');
         const youtubeURL = 'https://youtube.com/@bloxyhorizons';
+        const video = document.getElementById('intro');
+        const source = document.getElementById('videoSrc');
 
-        // Redirect when video ends
+        function isPortrait() {
+            return window.innerHeight > window.innerWidth;
+        }
+
+        source.src = isPortrait()
+            ? 'BloxyHorizons_Portrait.mp4'
+            : 'BloxyHorizons_Redirect_Video.mp4';
+        video.load();
+        video.play();
+
         video.addEventListener('ended', () => {
             window.location.href = youtubeURL;
         });
 
-        // Fallback: redirect after 15s even if video fails to load
         setTimeout(() => {
             window.location.href = youtubeURL;
         }, 15000);
